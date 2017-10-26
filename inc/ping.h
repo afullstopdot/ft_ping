@@ -32,6 +32,19 @@
 # define A_SWEEPINCRSIZE "-h"
 
 /*
+** globals
+*/
+
+char	 sendbuf[BUFSIZE];
+
+int		 datalen;			/* # bytes of data following ICMP header */
+char	*host;
+int		 nsent;				/* add 1 for each sendto() */
+pid_t	 pid;				/* our PID */
+int		 sockfd;
+int		 verbose;
+
+/*
 ** Runtime options
 */
 
@@ -53,5 +66,43 @@ int     init_env(int argc, char **argv, t_env *env);
 */
 
 void    dump_usage(void);
+
+/*
+** Function prototypes
+*/
+
+void	 init_v6(void);
+void	 proc_v4(char *, ssize_t, struct msghdr *, struct timeval *);
+void	 proc_v6(char *, ssize_t, struct msghdr *, struct timeval *);
+void	 send_v4(void);
+void	 send_v6(void);
+void	 readloop(void);
+void	 sig_alrm(int);
+void	 tv_sub(struct timeval *, struct timeval *);
+
+/*
+** We use the proto structure to handle the difference between IPv4 and IPv6
+** This structure contains two function pointers to socket address structures,
+** the size of the socket address structures, and the protocol value of ICMP.
+** the global pointer to one of the structures that we initialize for either
+** IPv4 or IPv6
+*/
+
+struct proto {
+    void	            (*fproc)(char *, ssize_t, struct msghdr *, struct timeval *);
+    void                (*fsend)(void);
+    void                (*finit)(void);
+    struct sockaddr     *sasend;	/* sockaddr{} for send, from getaddrinfo */
+    struct sockaddr     *sarecv;	/* sockaddr{} for receiving */
+    socklen_t	        salen;		/* length of sockaddr{}s */
+    int	   	            icmpproto;	/* IPPROTO_xxx value for ICMP */
+} *pr;
+
+#ifdef	IPV6
+
+#include	<netinet/ip6.h>
+#include	<netinet/icmp6.h>
+
+#endif
 
 #endif
