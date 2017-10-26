@@ -53,7 +53,7 @@ MAIN_OBJ := $(MAIN_SRC:$(SRCDIR)/$(MAIN_DIR)/%.c=$(OBJDIR)/$(MAIN_DIR)/%.o)
 
 # Executabe name
 
-EXE = ping
+EXE = ft_ping
 
 # OS for linking libraries (linux and os x different)
 
