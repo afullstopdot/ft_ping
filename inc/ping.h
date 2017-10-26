@@ -18,10 +18,6 @@
 # include <stdlib.h>
 # include <libft.h>
 # include <netinet/in_systm.h>
-# ifdef IPV6
-    #include <netinet/ip6.h>
-    #include <netinet/icmp6.h>
-# endif
 # include <netinet/ip.h>
 # include <netinet/ip_icmp.h>
 

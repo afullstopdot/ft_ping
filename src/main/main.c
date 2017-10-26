@@ -1,13 +1,5 @@
 #include <ping.h>
 
-struct proto proto_v4 = { proc_v4, send_v4, NULL, NULL, NULL, 0, IPPROTO_ICMP };
-
-#ifdef IPV6
-    struct proto proto_v6 = { proc_v6, send_v6, NULL, NULL, 0, IPPROTO_ICMPV6 };
-#endif
-
-int datalen = 56; /* data that goes with ICMP echo request */
-
 /*
 ** Server main
 */
