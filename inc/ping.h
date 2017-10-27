@@ -26,13 +26,6 @@
 # include <sys/types.h>
 # include <sys/socket.h>
 
-#ifdef	IPV6
-
-# include	<netinet/ip6.h>
-# include	<netinet/icmp6.h>
-
-#endif
-
 /*
 ** definitions
 */
@@ -42,19 +35,6 @@
 # define BUFSIZE 1500
 # define A_VERBOSE "-v"
 # define A_SWEEPINCRSIZE "-h"
-
-/*
-** globals
-*/
-
-char	 sendbuf[BUFSIZE];
-
-int		 datalen;			/* # bytes of data following ICMP header */
-char	*host;
-int		 nsent;				/* add 1 for each sendto() */
-pid_t	 pid;				/* our PID */
-int		 sockfd;
-int		 verbose;
 
 /*
 ** Runtime options
@@ -67,17 +47,6 @@ typedef struct      s_env
     char            *host;
 }                   t_env;
 
-/*
-** For signal handlers
-*/
-
-typedef void    Sigfunc(int);
-
-/*
-** Following shortens all the typecasts of pointer arguments:
-*/
-
-#define SA  struct sockaddr
 
 /*
 ** interpreter functions
@@ -90,58 +59,5 @@ int                 init_env(int argc, char **argv, t_env *env);
 */
 
 void                dump_usage(void);
-
-/*
-** Signals
-*/
-
-Sigfunc             *ft_wsignal(int signo, Sigfunc *func);
-Sigfunc             *signal(int, Sigfunc *);
-
-/*
-** wrappers
-*/
-
-struct addrinfo     *ft_whost_serv(const char *host, const char *serv, int family, int socktype);
-char 		        *ft_wsock_ntop_host(const struct sockaddr *sa, socklen_t salen);
-int                 ft_wsocket(int family, int type, int protocol);
-
-/*
-** sockets
-*/
-
-void	            readloop(void);
-void                sig_alrm(int signo);
-
-/*
-** Function prototypes
-*/
-
-void	            init_v6(void);
-void	            proc_v4(char *, ssize_t, struct msghdr *, struct timeval *);
-void	            proc_v6(char *, ssize_t, struct msghdr *, struct timeval *);
-void	            send_v4(void);
-void	            send_v6(void);
-void	            readloop(void);
-void	            sig_alrm(int);
-void	            tv_sub(struct timeval *, struct timeval *);
-
-/*
-** We use the proto structure to handle the difference between IPv4 and IPv6
-** This structure contains two function pointers to socket address structures,
-** the size of the socket address structures, and the protocol value of ICMP.
-** the global pointer to one of the structures that we initialize for either
-** IPv4 or IPv6
-*/
-
-struct proto {
-    void	            (*fproc)(char *, ssize_t, struct msghdr *, struct timeval *);
-    void                (*fsend)(void);
-    void                (*finit)(void);
-    struct sockaddr     *sasend;	    /* sockaddr{} for send, from getaddrinfo */
-    struct sockaddr     *sarecv;	    /* sockaddr{} for receiving */
-    socklen_t	        salen;		    /* length of sockaddr{}s */
-    int	   	            icmpproto;	    /* IPPROTO_xxx value for ICMP */
-} *pr;
 
 #endif
