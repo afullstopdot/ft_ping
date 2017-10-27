@@ -39,7 +39,6 @@ void	readloop(void)
 
 	/*
 	** Send first packet
-	** stopped here
 	*/
 
 	sig_alrm(SIGALRM);
@@ -58,9 +57,12 @@ void	readloop(void)
 			if (errno == EINTR)
 				continue;
 			else
-				err_sys("recvmsg error");
+			{
+				printf("error sending");
+				exit(EXIT_SUCCESS);
+			}
 		}
-
+		// here
 		Gettimeofday(&tval, NULL);
 		(*pr->fproc)(recvbuf, n, &msg, &tval);
 	}

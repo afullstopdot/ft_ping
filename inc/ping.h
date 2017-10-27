@@ -97,6 +97,7 @@ int                 ft_wsocket(int family, int type, int protocol);
 */
 
 void	            readloop(void);
+void                sig_alrm(int signo);
 
 /*
 ** Function prototypes
