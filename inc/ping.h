@@ -16,11 +16,14 @@
 # include <stdio.h>
 # include <string.h>
 # include <stdlib.h>
+# include <unistd.h>
 # include <libft.h>
 # include <netinet/in_systm.h>
 # include <netinet/in.h>
 # include <netinet/ip.h>
 # include <netinet/ip_icmp.h>
+# include <sys/types.h>
+# include <sys/socket.h>
 
 #ifdef	IPV6
 
@@ -80,8 +83,20 @@ void                dump_usage(void);
 */
 
 Sigfunc             *ft_wsignal(int signo, Sigfunc *func);
+
+/*
+** wrappers
+*/
+
 struct addrinfo     *ft_whost_serv(const char *host, const char *serv, int family, int socktype);
 char 		        *ft_wsock_ntop_host(const struct sockaddr *sa, socklen_t salen);
+int                 ft_wsocket(int family, int type, int protocol);
+
+/*
+** sockets
+*/
+
+void	            readloop(void);
 
 /*
 ** Function prototypes
