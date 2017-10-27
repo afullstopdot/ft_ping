@@ -15,6 +15,7 @@
 
 # include <stdio.h>
 # include <string.h>
+# include <signal.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <libft.h>
@@ -67,6 +68,18 @@ typedef struct      s_env
 }                   t_env;
 
 /*
+** For signal handlers
+*/
+
+typedef void    Sigfunc(int);
+
+/*
+** Following shortens all the typecasts of pointer arguments:
+*/
+
+#define SA  struct sockaddr
+
+/*
 ** interpreter functions
 */
 
@@ -83,6 +96,7 @@ void                dump_usage(void);
 */
 
 Sigfunc             *ft_wsignal(int signo, Sigfunc *func);
+Sigfunc             *signal(int, Sigfunc *);
 
 /*
 ** wrappers

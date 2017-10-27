@@ -51,7 +51,7 @@ int         main(int argc, char **argv)
         ** Set sigalarm
         */
 
-        ft_wignal(SIGALRM, sig_alrm);
+        ft_wsignal(SIGALRM, sig_alrm);
 
         /*
         ** Set host address informaion
