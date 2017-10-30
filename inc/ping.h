@@ -28,6 +28,7 @@
 #ifdef IPV6
     # include <netinet/ip6.h>
     # include <netinet/icmp6.h>
+    # define IS_IPV6 1
 #endif
 
 /*
@@ -101,6 +102,12 @@ void                ft_fatal_error(char *msg);
 */
 
 void                ft_set_raw_socket(t_global *global);
+
+/*
+** ICMP functions
+*/
+
+// void    proc_v4 (char *ptr, ssize_t len, struct msghhdr *msg, struct timeval *tvrecv);
 
 /*
 ** privilege functions
