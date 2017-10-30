@@ -35,6 +35,15 @@
 # define BUFSIZE 1500
 # define A_VERBOSE "-v"
 # define A_SWEEPINCRSIZE "-h"
+# define C_RED "\x1B[31m"
+# define C_GRN "\x1B[32m"
+# define C_YEL "\x1B[33m"
+# define C_BLU "\x1B[34m"
+# define C_MAG "\x1B[35m"
+# define C_CYN "\x1B[36m"
+# define C_WHT "\x1B[37m"
+# define C_RST "\x1B[0m"
+# define ROOT_UID 0
 
 /*
 ** Runtime options
@@ -46,6 +55,16 @@ typedef struct      s_env
     unsigned int    sweepincrsize;
     char            *host;
 }                   t_env;
+
+typedef struct      s_global
+{
+    int             sockfd;
+    int             host;
+    int             datalen;
+    pid_t           pid;
+    char            sendbuf[BUFSIZE];
+    t_env           *env;
+}                   t_global;
 
 
 /*
@@ -59,5 +78,19 @@ int                 init_env(int argc, char **argv, t_env *env);
 */
 
 void                dump_usage(void);
+void                ft_fatal_error(char *msg);
+
+
+/*
+** Socket functions
+*/
+
+void                ft_set_raw_socket(t_global *global);
+
+/*
+** privilege functions
+*/
+
+void                ft_set_superuser(void);
 
 #endif

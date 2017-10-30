@@ -45,6 +45,18 @@ ERROR_DIR = error
 ERROR_SRC := $(wildcard $(SRCDIR)/$(ERROR_DIR)/*.c)
 ERROR_OBJ := $(ERROR_SRC:$(SRCDIR)/$(ERROR_DIR)/%.c=$(OBJDIR)/$(ERROR_DIR)/%.o)
 
+# Privileges src & obj
+
+PRIV_DIR = privileges
+PRIV_SRC := $(wildcard $(SRCDIR)/$(PRIV_DIR)/*.c)
+PRIV_OBJ := $(PRIV_SRC:$(SRCDIR)/$(PRIV_DIR)/%.c=$(OBJDIR)/$(PRIV_DIR)/%.o)
+
+# Privileges src & obj
+
+SOCK_DIR = sockets
+SOCK_SRC := $(wildcard $(SRCDIR)/$(SOCK_DIR)/*.c)
+SOCK_OBJ := $(SOCK_SRC:$(SRCDIR)/$(SOCK_DIR)/%.c=$(OBJDIR)/$(SOCK_DIR)/%.o)
+
 # Main src & obj
 
 MAIN_DIR = main
@@ -80,13 +92,13 @@ all: $(OBJDIR) $(BINDIR)/$(EXE)
 
 $(OBJDIR):
 	@echo "\033[0;31m[PING]: \033[0m\033[0;36mCreating "$@" directory!\033[0m"
-	@mkdir -p $@/$(INTERPRETER_DIR) $@/$(ERROR_DIR) $@/$(MAIN_DIR)
+	@mkdir -p $@/$(INTERPRETER_DIR) $@/$(ERROR_DIR) $@/$(MAIN_DIR) $@/$(PRIV_DIR) $@/$(SOCK_DIR)
 	@echo "\033[0;31m[PING]: \033[0m\033[0;32mComplete!\033[0m"
 
 
-$(BINDIR)/$(EXE): $(INTERPRETER_OBJ) $(ERROR_OBJ) $(MAIN_OBJ)
+$(BINDIR)/$(EXE): $(INTERPRETER_OBJ) $(ERROR_OBJ) $(PRIV_OBJ) $(SOCK_OBJ) $(MAIN_OBJ)
 	@echo "\033[0;31m[PING]: \033[0mLinking object files!"
-	@$(LINKER) $(INTERPRETER_OBJ) $(ERROR_OBJ) $(MAIN_OBJ) $(FLAGS) -o $@ $(LIBFT) -I $(INCDIR) $(LIBFT_H)
+	@$(LINKER) $(INTERPRETER_OBJ) $(ERROR_OBJ) $(PRIV_OBJ) $(SOCK_OBJ) $(MAIN_OBJ) $(FLAGS) -o $@ $(LIBFT) -I $(INCDIR) $(LIBFT_H)
 	@echo "\033[0;31m[PING]: \033[0mLinking complete!"
 
 
@@ -106,6 +118,18 @@ $(MAIN_OBJ): $(OBJDIR)/$(MAIN_DIR)/%.o : $(SRCDIR)/$(MAIN_DIR)/%.c
 	@echo "\033[0;34m[main]: \033[0mCompiling source file \033[0;36m"$<"\033[0m!"
 	@$(CC) $(FLAGS) -c $< -o $@ -I $(INCDIR) $(LINK) $(LIBFT_H)
 	@echo "\033[0;34m[main]: \033[0mCompiled \033[0;36m"$<"\033[0m successfully!"
+
+
+$(PRIV_OBJ): $(OBJDIR)/$(PRIV_DIR)/%.o : $(SRCDIR)/$(PRIV_DIR)/%.c
+	@echo "\033[0;34m[priv]: \033[0mCompiling source file \033[0;36m"$<"\033[0m!"
+	@$(CC) $(FLAGS) -c $< -o $@ -I $(INCDIR) $(LINK) $(LIBFT_H)
+	@echo "\033[0;34m[priv]: \033[0mCompiled \033[0;36m"$<"\033[0m successfully!"
+
+
+$(SOCK_OBJ): $(OBJDIR)/$(SOCK_DIR)/%.o : $(SRCDIR)/$(SOCK_DIR)/%.c
+	@echo "\033[0;34m[sock]: \033[0mCompiling source file \033[0;36m"$<"\033[0m!"
+	@$(CC) $(FLAGS) -c $< -o $@ -I $(INCDIR) $(LINK) $(LIBFT_H)
+	@echo "\033[0;34m[sock]: \033[0mCompiled \033[0;36m"$<"\033[0m successfully!"
 
 
 .PHONY: clean
