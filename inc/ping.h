@@ -25,6 +25,10 @@
 # include <netinet/ip_icmp.h>
 # include <sys/types.h>
 # include <sys/socket.h>
+#ifdef IPV6
+    # include <netinet/ip6.h>
+    # include <netinet/icmp6.h>
+#endif
 
 /*
 ** definitions
@@ -56,6 +60,17 @@ typedef struct      s_env
     char            *host;
 }                   t_env;
 
+typedef struct      s_proto
+{
+    void            (*fproc) (char *, ssize_t, struct msghdr *, struct timeval *);
+    void            (*fsend) (void);
+    void            (*finit) (void);
+    struct sockaddr *sasend;
+    struct sockaddr *sarecv;
+    socklen_t       salen;
+    int             icmpproto;
+}                   t_proto;
+
 typedef struct      s_global
 {
     int             sockfd;
@@ -64,8 +79,8 @@ typedef struct      s_global
     pid_t           pid;
     char            sendbuf[BUFSIZE];
     t_env           *env;
+    t_proto         *proto;
 }                   t_global;
-
 
 /*
 ** interpreter functions
