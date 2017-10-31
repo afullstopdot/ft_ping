@@ -171,7 +171,7 @@ $(WRAP_OBJ): $(OBJDIR)/$(WRAP_DIR)/%.o : $(SRCDIR)/$(WRAP_DIR)/%.c
 .PHONY: clean
 clean:
 	@echo "\033[0;36mRemoving object files\033[0m"
-	@rm -f $(INTERPRETER_OBJ) $(ERROR_OBJ) $(PRIV_OBJ) $(ICMP_OBJ) $(SOCK_OBJ) $(SIGN_DIR) $(MAIN_OBJ) $(WRAP_OBJ)
+	@rm -f $(INTERPRETER_OBJ) $(ERROR_OBJ) $(PRIV_OBJ) $(ICMP_OBJ) $(SOCK_OBJ) $(SIGN_OBJ) $(MAIN_OBJ) $(WRAP_OBJ)
 	@echo "\033[0;32mCleanup complete\033[0m"
 
 

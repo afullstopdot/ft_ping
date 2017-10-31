@@ -95,7 +95,7 @@ void    proc_v4 (char *ptr, ssize_t len, struct msghdr *msg, struct timeval *tvr
         */
 
         printf(" %d bytes from %s: type = %d, code = %d\n",
-            icmplen, ft_sock_ntop_host(g_global->pr->sarecv, g_global->pr->salen),
+            icmplen, ft_sock_ntop_host(g_global->pr->sacrecv, g_global->pr->salen),
             icmp->icmp_type, icmp->icmp_code);
 
     }
@@ -103,7 +103,7 @@ void    proc_v4 (char *ptr, ssize_t len, struct msghdr *msg, struct timeval *tvr
     {
 
         printf(" %d bytes from %s: type = %d, code = %d\n",
-            icmplen, ft_sock_ntop_host(g_global->pr->sarecv, g_global->pr->salen),
+            icmplen, ft_sock_ntop_host(g_global->pr->sacrecv, g_global->pr->salen),
             icmp->icmp_type, icmp->icmp_code);
 
     }
