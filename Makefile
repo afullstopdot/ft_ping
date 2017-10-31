@@ -63,6 +63,18 @@ ICMP_DIR = icmp
 ICMP_SRC := $(wildcard $(SRCDIR)/$(ICMP_DIR)/*.c)
 ICMP_OBJ := $(ICMP_SRC:$(SRCDIR)/$(ICMP_DIR)/%.c=$(OBJDIR)/$(ICMP_DIR)/%.o)
 
+# Signal src & obj
+
+SIGN_DIR = signals
+SIGN_SRC := $(wildcard $(SRCDIR)/$(SIGN_DIR)/*.c)
+SIGN_OBJ := $(SIGN_SRC:$(SRCDIR)/$(SIGN_DIR)/%.c=$(OBJDIR)/$(SIGN_DIR)/%.o)
+
+# Wrappers src & obj
+
+WRAP_DIR = wrappers
+WRAP_SRC := $(wildcard $(SRCDIR)/$(WRAP_DIR)/*.c)
+WRAP_OBJ := $(WRAP_SRC:$(SRCDIR)/$(WRAP_DIR)/%.c=$(OBJDIR)/$(WRAP_DIR)/%.o)
+
 # Main src & obj
 
 MAIN_DIR = main
@@ -98,13 +110,13 @@ all: $(OBJDIR) $(BINDIR)/$(EXE)
 
 $(OBJDIR):
 	@echo "\033[0;31m[PING]: \033[0m\033[0;36mCreating "$@" directory!\033[0m"
-	@mkdir -p $@/$(INTERPRETER_DIR) $@/$(ERROR_DIR) $@/$(ICMP_DIR) $@/$(MAIN_DIR) $@/$(PRIV_DIR) $@/$(SOCK_DIR)
+	@mkdir -p $@/$(INTERPRETER_DIR) $@/$(ERROR_DIR) $@/$(ICMP_DIR) $@/$(MAIN_DIR) $@/$(PRIV_DIR) $@/$(SOCK_DIR) $@/$(SIGN_DIR) $@/$(WRAP_DIR)
 	@echo "\033[0;31m[PING]: \033[0m\033[0;32mComplete!\033[0m"
 
 
-$(BINDIR)/$(EXE): $(INTERPRETER_OBJ) $(ERROR_OBJ) $(PRIV_OBJ) $(ICMP_OBJ) $(SOCK_OBJ) $(MAIN_OBJ)
+$(BINDIR)/$(EXE): $(INTERPRETER_OBJ) $(ERROR_OBJ) $(PRIV_OBJ) $(ICMP_OBJ) $(SOCK_OBJ) $(SIGN_OBJ) $(WRAP_OBJ) $(MAIN_OBJ)
 	@echo "\033[0;31m[PING]: \033[0mLinking object files!"
-	@$(LINKER) $(INTERPRETER_OBJ) $(ERROR_OBJ) $(PRIV_OBJ) $(ICMP_OBJ) $(SOCK_OBJ) $(MAIN_OBJ) $(FLAGS) -o $@ $(LIBFT) -I $(INCDIR) $(LIBFT_H)
+	@$(LINKER) $(INTERPRETER_OBJ) $(ERROR_OBJ) $(PRIV_OBJ) $(ICMP_OBJ) $(SOCK_OBJ) $(SIGN_OBJ) $(WRAP_OBJ) $(MAIN_OBJ) $(FLAGS) -o $@ $(LIBFT) -I $(INCDIR) $(LIBFT_H)
 	@echo "\033[0;31m[PING]: \033[0mLinking complete!"
 
 
@@ -144,10 +156,22 @@ $(ICMP_OBJ): $(OBJDIR)/$(ICMP_DIR)/%.o : $(SRCDIR)/$(ICMP_DIR)/%.c
 	@echo "\033[0;34m[icmp]: \033[0mCompiled \033[0;36m"$<"\033[0m successfully!"
 
 
+$(SIGN_OBJ): $(OBJDIR)/$(SIGN_DIR)/%.o : $(SRCDIR)/$(SIGN_DIR)/%.c
+	@echo "\033[0;34m[signals]: \033[0mCompiling source file \033[0;36m"$<"\033[0m!"
+	@$(CC) $(FLAGS) -c $< -o $@ -I $(INCDIR) $(LINK) $(LIBFT_H)
+	@echo "\033[0;34m[signals]: \033[0mCompiled \033[0;36m"$<"\033[0m successfully!"
+
+
+$(WRAP_OBJ): $(OBJDIR)/$(WRAP_DIR)/%.o : $(SRCDIR)/$(WRAP_DIR)/%.c
+	@echo "\033[0;34m[signals]: \033[0mCompiling source file \033[0;36m"$<"\033[0m!"
+	@$(CC) $(FLAGS) -c $< -o $@ -I $(INCDIR) $(LINK) $(LIBFT_H)
+	@echo "\033[0;34m[signals]: \033[0mCompiled \033[0;36m"$<"\033[0m successfully!"
+
+
 .PHONY: clean
 clean:
 	@echo "\033[0;36mRemoving object files\033[0m"
-	@rm -f $(INTERPRETER_OBJ) $(ERROR_OBJ) $(PRIV_OBJ) $(ICMP_OBJ) $(SOCK_OBJ) $(MAIN_OBJ)
+	@rm -f $(INTERPRETER_OBJ) $(ERROR_OBJ) $(PRIV_OBJ) $(ICMP_OBJ) $(SOCK_OBJ) $(SIGN_DIR) $(MAIN_OBJ) $(WRAP_OBJ)
 	@echo "\033[0;32mCleanup complete\033[0m"
 
 

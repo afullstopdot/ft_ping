@@ -19,6 +19,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <libft.h>
+# include <sys/time.h>
 # include <netinet/in_systm.h>
 # include <netinet/in.h>
 # include <netinet/ip.h>
@@ -26,6 +27,8 @@
 # include <arpa/inet.h>
 # include <sys/types.h>
 # include <sys/socket.h>
+# include <netdb.h>
+# include <errno.h>
 #ifdef IPV6
     # include <netinet/ip6.h>
     # include <netinet/icmp6.h>
@@ -68,7 +71,7 @@ typedef struct      s_proto
     void            (*fsend) (void);
     void            (*finit) (void);
     struct sockaddr *sasend;
-    struct sockaddr *sarecv;
+    struct sockaddr *sacrecv;
     socklen_t       salen;
     int             icmpproto;
 }                   t_proto;
@@ -115,6 +118,8 @@ void                ft_tv_subtract(struct timeval *out, struct timeval *in);
 void                proc_v4 (char *ptr, ssize_t len, struct msghdr *msg, struct timeval *tvrecv);
 void                send_v4(void);
 void                init_v6(void);
+void                readloop(void);
+uint16_t            in_cksum(uint16_t *addr, int len);
 
 /*
 ** privilege functions
@@ -127,6 +132,19 @@ void                ft_set_superuser(void);
 */
 
 void                ft_gettimeofday(struct timeval *tv, void *foo);
+void	            ft_sendto(int fd, const void *ptr, size_t nbytes, int flags, const struct sockaddr *sa, socklen_t salen);
 void                *ft_calloc(size_t n, size_t size);
+
+/*
+** Signals
+*/
+
+void                sig_alrm(int signo);
+
+/*
+** Wrappers
+*/
+
+struct addrinfo     *ft_host_serv(const char *host, const char *serv, int family, int socktype);
 
 #endif

@@ -11,7 +11,14 @@ void    sig_alrm (int signo)
     **
     */
 
-    (g_global->(*pr)->fsend) ();
+    if (signo != SIGALRM)
+        return ;
+
+    /*
+    **
+    */
+
+    (*g_global->pr->fsend) ();
 
     /*
     **

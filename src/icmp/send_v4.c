@@ -74,6 +74,6 @@ void                send_v4(void)
     **
     */
 
-    Sendto (g_global->sockfd, g_global->sendbuf, len, 0, g_global->pr->sasend, g_global->pr->salen);
+    ft_sendto (g_global->sockfd, g_global->sendbuf, len, 0, g_global->pr->sasend, g_global->pr->salen);
 
 }

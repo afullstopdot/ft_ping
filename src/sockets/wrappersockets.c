@@ -23,3 +23,14 @@ void *ft_calloc(size_t n, size_t size)
         ft_fatal_error("calloc error");
 	return (ptr);
 }
+
+/*
+** sendto wrapper
+*/
+
+void	ft_sendto(int fd, const void *ptr, size_t nbytes, int flags, const struct sockaddr *sa, socklen_t salen)
+{
+	if (sendto(fd, ptr, nbytes, flags, sa, salen) != (ssize_t)nbytes)
+		ft_fatal_error("sendto error");
+	return ;
+}
