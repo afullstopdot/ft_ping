@@ -94,9 +94,9 @@ void    proc_v4 (char *ptr, ssize_t len, struct msghdr *msg, struct timeval *tvr
         ** print rtt
         */
 
-        printf(" %d bytes from %s: type = %d, code = %d\n",
+        printf("%d bytes from %s: seq=%u, ttl=%d, rtt=%.3f ms\n",
             icmplen, ft_sock_ntop_host(g_global->pr->sacrecv, g_global->pr->salen),
-            icmp->icmp_type, icmp->icmp_code);
+            icmp->icmp_seq, ip->ip_ttl, rtt);
 
     }
     else if (g_global->env->verbose)
