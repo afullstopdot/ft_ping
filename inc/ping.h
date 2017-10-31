@@ -76,7 +76,7 @@ typedef struct      s_proto
 typedef struct      s_global
 {
     int             sockfd;
-    int             host;
+    int             nsent;
     int             datalen;
     pid_t           pid;
     char            sendbuf[BUFSIZE];
@@ -112,12 +112,21 @@ void                ft_tv_subtract(struct timeval *out, struct timeval *in);
 ** ICMP functions
 */
 
-void    proc_v4 (char *ptr, ssize_t len, struct msghdr *msg, struct timeval *tvrecv);
+void                proc_v4 (char *ptr, ssize_t len, struct msghdr *msg, struct timeval *tvrecv);
+void                send_v4(void);
+void                init_v6(void);
 
 /*
 ** privilege functions
 */
 
 void                ft_set_superuser(void);
+
+/*
+** Wrapper functions
+*/
+
+void                ft_gettimeofday(struct timeval *tv, void *foo);
+void                *ft_calloc(size_t n, size_t size);
 
 #endif
