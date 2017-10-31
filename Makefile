@@ -57,6 +57,12 @@ SOCK_DIR = sockets
 SOCK_SRC := $(wildcard $(SRCDIR)/$(SOCK_DIR)/*.c)
 SOCK_OBJ := $(SOCK_SRC:$(SRCDIR)/$(SOCK_DIR)/%.c=$(OBJDIR)/$(SOCK_DIR)/%.o)
 
+# ICMP src & obj
+
+ICMP_DIR = icmp
+ICMP_SRC := $(wildcard $(SRCDIR)/$(ICMP_DIR)/*.c)
+ICMP_OBJ := $(ICMP_SRC:$(SRCDIR)/$(ICMP_DIR)/%.c=$(OBJDIR)/$(ICMP_DIR)/%.o)
+
 # Main src & obj
 
 MAIN_DIR = main
@@ -92,13 +98,13 @@ all: $(OBJDIR) $(BINDIR)/$(EXE)
 
 $(OBJDIR):
 	@echo "\033[0;31m[PING]: \033[0m\033[0;36mCreating "$@" directory!\033[0m"
-	@mkdir -p $@/$(INTERPRETER_DIR) $@/$(ERROR_DIR) $@/$(MAIN_DIR) $@/$(PRIV_DIR) $@/$(SOCK_DIR)
+	@mkdir -p $@/$(INTERPRETER_DIR) $@/$(ERROR_DIR) $@/$(ICMP_DIR) $@/$(MAIN_DIR) $@/$(PRIV_DIR) $@/$(SOCK_DIR)
 	@echo "\033[0;31m[PING]: \033[0m\033[0;32mComplete!\033[0m"
 
 
-$(BINDIR)/$(EXE): $(INTERPRETER_OBJ) $(ERROR_OBJ) $(PRIV_OBJ) $(SOCK_OBJ) $(MAIN_OBJ)
+$(BINDIR)/$(EXE): $(INTERPRETER_OBJ) $(ERROR_OBJ) $(PRIV_OBJ) $(ICMP_OBJ) $(SOCK_OBJ) $(MAIN_OBJ)
 	@echo "\033[0;31m[PING]: \033[0mLinking object files!"
-	@$(LINKER) $(INTERPRETER_OBJ) $(ERROR_OBJ) $(PRIV_OBJ) $(SOCK_OBJ) $(MAIN_OBJ) $(FLAGS) -o $@ $(LIBFT) -I $(INCDIR) $(LIBFT_H)
+	@$(LINKER) $(INTERPRETER_OBJ) $(ERROR_OBJ) $(PRIV_OBJ) $(ICMP_OBJ) $(SOCK_OBJ) $(MAIN_OBJ) $(FLAGS) -o $@ $(LIBFT) -I $(INCDIR) $(LIBFT_H)
 	@echo "\033[0;31m[PING]: \033[0mLinking complete!"
 
 
@@ -132,10 +138,16 @@ $(SOCK_OBJ): $(OBJDIR)/$(SOCK_DIR)/%.o : $(SRCDIR)/$(SOCK_DIR)/%.c
 	@echo "\033[0;34m[sock]: \033[0mCompiled \033[0;36m"$<"\033[0m successfully!"
 
 
+$(ICMP_OBJ): $(OBJDIR)/$(ICMP_DIR)/%.o : $(SRCDIR)/$(ICMP_DIR)/%.c
+	@echo "\033[0;34m[icmp]: \033[0mCompiling source file \033[0;36m"$<"\033[0m!"
+	@$(CC) $(FLAGS) -c $< -o $@ -I $(INCDIR) $(LINK) $(LIBFT_H)
+	@echo "\033[0;34m[icmp]: \033[0mCompiled \033[0;36m"$<"\033[0m successfully!"
+
+
 .PHONY: clean
 clean:
 	@echo "\033[0;36mRemoving object files\033[0m"
-	@rm -f $(INTERPRETER_OBJ) $(ERROR_OBJ) $(MAIN_OBJ)
+	@rm -f $(INTERPRETER_OBJ) $(ERROR_OBJ) $(PRIV_OBJ) $(ICMP_OBJ) $(SOCK_OBJ) $(MAIN_OBJ)
 	@echo "\033[0;32mCleanup complete\033[0m"
 
 

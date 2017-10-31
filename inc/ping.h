@@ -23,6 +23,7 @@
 # include <netinet/in.h>
 # include <netinet/ip.h>
 # include <netinet/ip_icmp.h>
+# include <arpa/inet.h>
 # include <sys/types.h>
 # include <sys/socket.h>
 #ifdef IPV6
@@ -80,8 +81,10 @@ typedef struct      s_global
     pid_t           pid;
     char            sendbuf[BUFSIZE];
     t_env           *env;
-    t_proto         *proto;
+    t_proto         *pr;
 }                   t_global;
+
+extern t_global        *g_global;
 
 /*
 ** interpreter functions
@@ -101,13 +104,15 @@ void                ft_fatal_error(char *msg);
 ** Socket functions
 */
 
-void                ft_set_raw_socket(t_global *global);
+void                ft_set_raw_socket(void);
+char                *ft_sock_ntop_host(const struct sockaddr *sa, socklen_t salen);
+void                ft_tv_subtract(struct timeval *out, struct timeval *in);
 
 /*
 ** ICMP functions
 */
 
-// void    proc_v4 (char *ptr, ssize_t len, struct msghhdr *msg, struct timeval *tvrecv);
+void    proc_v4 (char *ptr, ssize_t len, struct msghdr *msg, struct timeval *tvrecv);
 
 /*
 ** privilege functions

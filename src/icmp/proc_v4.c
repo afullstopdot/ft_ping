@@ -9,7 +9,7 @@
 ** and in the ICMPv4 header are valid
 */
 
-void    proc_v4 (char *ptr, ssize_t len, struct msghhdr *msg, struct timeval *tvrecv)
+void    proc_v4 (char *ptr, ssize_t len, struct msghdr *msg, struct timeval *tvrecv)
 {
 
     int             hlenl;
@@ -18,6 +18,10 @@ void    proc_v4 (char *ptr, ssize_t len, struct msghhdr *msg, struct timeval *tv
     struct ip       *ip;  
     struct icmp     *icmp;  
     struct timeval  *tvsend;  
+
+    // temp, not used 
+    if (msg)
+        ft_fatal_error("msg is NULL");
 
     /*
     ** Start of IP header
@@ -58,7 +62,7 @@ void    proc_v4 (char *ptr, ssize_t len, struct msghhdr *msg, struct timeval *tv
         ** Check that there is a response to our ECHO_REQUEST
         */
 
-        if (icmp->icmp_id != pid)
+        if (icmp->icmp_id != g_global->pid)
             return ;
 
         /*
@@ -78,7 +82,7 @@ void    proc_v4 (char *ptr, ssize_t len, struct msghhdr *msg, struct timeval *tv
         ** Get timeval difference
         */
 
-        tv_sub(tvrecv, tvsend);
+        ft_tv_subtract(tvrecv, tvsend);
 
         /*
         ** 
@@ -91,16 +95,16 @@ void    proc_v4 (char *ptr, ssize_t len, struct msghhdr *msg, struct timeval *tv
         */
 
         printf(" %d bytes from %s: type = %d, code = %d\n",
-            icmplen, Sock_ntop_host(pr->sarecv, pr->salen),
+            icmplen, ft_sock_ntop_host(g_global->pr->sarecv, g_global->pr->salen),
             icmp->icmp_type, icmp->icmp_code);
 
     }
-    else if (verbose)
+    else if (g_global->env->verbose)
     {
 
         printf(" %d bytes from %s: type = %d, code = %d\n",
-            icmplen, Sock_ntop_host(pr->sarecv, pr->salen),
-            icmp->icmp_type, icmp->icmp->icmp_code);
+            icmplen, ft_sock_ntop_host(g_global->pr->sarecv, g_global->pr->salen),
+            icmp->icmp_type, icmp->icmp_code);
 
     }
 

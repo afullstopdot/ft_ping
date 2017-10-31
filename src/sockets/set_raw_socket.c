@@ -4,7 +4,7 @@
 ** This function must create a raw socket, and return the descriptor
 */
 
-void    ft_set_raw_socket(t_global *global)
+void    ft_set_raw_socket(void)
 {
 
     int on;
@@ -15,7 +15,7 @@ void    ft_set_raw_socket(t_global *global)
     */
 
     on = 1;
-    if (global)
+    if (g_global)
     {
 
         /*
@@ -30,14 +30,14 @@ void    ft_set_raw_socket(t_global *global)
         ** from writing their own IP datagrams to the network
         */
 
-        if ((global->sockfd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP)) < 0)
+        if ((g_global->sockfd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP)) < 0)
             ft_fatal_error("failed to connect raw socket");
 
         /*
         ** Set socket header options
         */
 
-        if (setsockopt(global->sockfd, IPPROTO_IP, IP_HDRINCL, &on, sizeof(on)) < 0)
+        if (setsockopt(g_global->sockfd, IPPROTO_IP, IP_HDRINCL, &on, sizeof(on)) < 0)
             ft_fatal_error("failed to set socket options");
     
     }
