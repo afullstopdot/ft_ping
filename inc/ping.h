@@ -208,6 +208,7 @@ void                send_v4(void);
 void                init_v6(void);
 void                readloop(void);
 uint16_t            in_cksum(uint16_t *addr, int len);
+void                ft_init_proto_ipv4(t_proto *proto_v4);
 
 /*
 ** privilege functions

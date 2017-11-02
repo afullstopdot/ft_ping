@@ -10,13 +10,16 @@ int         main(int argc, char **argv)
     struct addrinfo     *ai;
     // t_proto         proto_v6;
 
-    proto_v4.fproc = proc_v4;
-    proto_v4.fsend = send_v4;
-    proto_v4.finit = NULL;
-    proto_v4.sasend = NULL;
-    proto_v4.sacrecv = NULL;
-    proto_v4.salen = 0;
-    proto_v4.icmpproto = IPPROTO_ICMP;
+    /*
+    ** Initialize proto_ipv4
+    */
+
+    ft_init_proto_ipv4(&proto_v4);
+
+    /*
+    ** Allocate some memory for 
+    */
+
     if (!(env = (t_env *)malloc(sizeof(t_env))) || !(g_global = (t_global *)malloc(sizeof(t_global))))
         return (0);
     
