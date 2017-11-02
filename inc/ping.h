@@ -36,14 +36,29 @@
 #endif
 
 /*
-** definitions
+** TRUE / FALSE constants
 */
 
 # define TRUE 1
 # define FALSE 0
+
+/*
+** Default BUFFSIZE
+*/
+
 # define BUFSIZE 1500
+
+/*
+** Handled options
+*/
+
 # define A_VERBOSE "-v"
 # define A_SWEEPINCRSIZE "-h"
+
+/*
+** Colors
+*/
+
 # define C_RED "\x1B[31m"
 # define C_GRN "\x1B[32m"
 # define C_YEL "\x1B[33m"
@@ -52,29 +67,93 @@
 # define C_CYN "\x1B[36m"
 # define C_WHT "\x1B[37m"
 # define C_RST "\x1B[0m"
+
+/*
+** ROOT UID value
+*/
+
 # define ROOT_UID 0
 
 /*
-** Runtime options
+** program options, currently - [v, h] are handled
 */
 
 typedef struct      s_env
 {
+    
+    /*
+    ** Verbose output
+    */
+    
     unsigned int    verbose;
+
+    /*
+    ** Specify the number of bytes to increment the size of the ICMP payload
+    ** after each sweep when sending sweeping pings. The default value is 1
+    */
+
     unsigned int    sweepincrsize;
+
+    /*
+    ** Host to ping, can be DNS or IP address
+    */
+
     char            *host;
 }                   t_env;
 
+/*
+** t_proto structure is used to handle the difference between IPv4 and IPv6
+*/
+
 typedef struct      s_proto
 {
+
+    /*
+    ** Process ICMPv4/6 message, pointer to a function so it can point to IPv4 or IPv6
+    */
+
     void            (*fproc) (char *, ssize_t, struct msghdr *, struct timeval *);
+
+    /*
+    ** Build and send ICMP ECHO_REQUEST message
+    */
+
     void            (*fsend) (void);
+
+    /*
+    ** Initialize [here]
+    */
+
     void            (*finit) (void);
+
+    /*
+    ** sockaddr{} for sending, from getaddrinfo
+    */
+
     struct sockaddr *sasend;
+
+    /*
+    ** sockaddr{} for receiving
+    */
+
     struct sockaddr *sacrecv;
+
+    /*
+    ** length of sockaddr {}s
+    */
+
     socklen_t       salen;
+
+    /*
+    ** IPPROTO_xx value for ICMP (IPv4/IPv6)
+    */
+
     int             icmpproto;
 }                   t_proto;
+
+/*
+** t_env, t_proto and some values that will be needed/updated globally
+*/
 
 typedef struct      s_global
 {
@@ -86,6 +165,10 @@ typedef struct      s_global
     t_env           *env;
     t_proto         *pr;
 }                   t_global;
+
+/*
+** Global variable
+*/
 
 extern t_global        *g_global;
 
