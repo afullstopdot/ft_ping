@@ -20,7 +20,7 @@ void    proc_v4 (char *ptr, ssize_t len, struct msghdr *msg, struct timeval *tvr
     struct timeval  *tvsend;  
 
     // temp, not used 
-    if (msg)
+    if (!msg)
         ft_fatal_error("msg is NULL");
 
     /*

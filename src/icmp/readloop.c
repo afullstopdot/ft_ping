@@ -1,5 +1,9 @@
 #include "ping.h"
 
+/*
+**
+*/
+
 void    readloop(void)
 {
 
