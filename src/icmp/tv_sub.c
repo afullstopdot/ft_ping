@@ -1,4 +1,4 @@
-#include "ping.h"
+#include <ping.h>
 
 /*
 ** tv-suvtractfunction, subtracts two timeval structures

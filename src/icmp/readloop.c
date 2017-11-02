@@ -1,4 +1,4 @@
-#include "ping.h"
+#include <ping.h>
 
 /*
 **
@@ -18,7 +18,7 @@ void    readloop(void)
     if ((g_global->sockfd = socket(g_global->pr->sasend->sa_family, SOCK_RAW, g_global->pr->icmpproto)) < 0)
         ft_fatal_error("failed to connect raw socket");
 
-    setuid(getuid()); /* don't need special permissions any more */
+    // setuid(getuid()); /* don't need special permissions any more */
 
     if (g_global->pr->finit)
         (*g_global->pr->finit) ();

@@ -28,6 +28,12 @@ int         main(int argc, char **argv)
     {
 
         /*
+        ** Try and connect to SU
+        */
+
+        ft_set_superuser();
+
+        /*
         ** Add env to global struct, set default datalen
         */
 
@@ -57,7 +63,7 @@ int         main(int argc, char **argv)
         **
         */
 
-        printf ("PING %s (%s): %d data bytes\n", 
+        printf("PING %s (%s): %d data bytes\n", 
             ai->ai_canonname ? ai->ai_canonname : h, h, g_global->datalen);
 
         /*
@@ -71,7 +77,7 @@ int         main(int argc, char **argv)
         
         }
         else
-            ft_fatal_error("uknown address family");
+            ft_fatal_error("unknown address family");
   
         /*
         **

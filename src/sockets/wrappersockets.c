@@ -1,4 +1,4 @@
-#include "ping.h"
+#include <ping.h>
 
 /*
 ** get time of the day wrapper

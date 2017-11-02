@@ -1,4 +1,4 @@
-#include "ping.h"
+#include <ping.h>
 
 /*
 ** proc_v4 processes all recieved ICMPv4 messages

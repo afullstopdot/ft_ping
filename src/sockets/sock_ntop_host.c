@@ -1,4 +1,4 @@
-# include "ping.h"
+# include <ping.h>
 
 #ifdef	HAVE_SOCKADDR_DL_STRUCT
     #include	<net/if_dl.h>

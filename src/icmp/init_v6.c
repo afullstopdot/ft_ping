@@ -1,4 +1,4 @@
-#include "ping.h"
+#include <ping.h>
 
 /*
 ** Initialize ICMPv6 socket

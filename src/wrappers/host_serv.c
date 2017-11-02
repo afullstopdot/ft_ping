@@ -1,4 +1,4 @@
-#include "ping.h"
+#include <ping.h>
 
 struct addrinfo     *ft_host_serv(const char *host, const char *serv, int family, int socktype)
 {

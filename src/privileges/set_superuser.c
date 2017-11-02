@@ -1,4 +1,4 @@
-#include "ping.h"
+#include <ping.h>
 
 /*
 ** Raw sockets allow sending of IP datagrams as a user process

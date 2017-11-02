@@ -1,4 +1,4 @@
-#include "ping.h"
+#include <ping.h>
 
 /*
 ** Builds an ICMPv4 echo request message and sends it
