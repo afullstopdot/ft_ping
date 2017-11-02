@@ -29,6 +29,11 @@
 # include <sys/socket.h>
 # include <netdb.h>
 # include <errno.h>
+
+/*
+** We include two headers that define the IPv6 and ICMPv6 structures and constants
+*/
+
 #ifdef IPV6
     # include <netinet/ip6.h>
     # include <netinet/icmp6.h>
@@ -170,7 +175,7 @@ typedef struct      s_global
 ** Global variable
 */
 
-extern t_global        *g_global;
+extern t_global     *g_global;
 
 /*
 ** interpreter functions
