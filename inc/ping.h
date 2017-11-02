@@ -37,7 +37,6 @@
 #ifdef IPV6
     # include <netinet/ip6.h>
     # include <netinet/icmp6.h>
-    # define IS_IPV6 1
 #endif
 
 /*
@@ -104,6 +103,13 @@ typedef struct      s_env
     */
 
     char            *host;
+
+    /*
+    ** Program time start
+    */
+
+    struct timeval  tv_begin;
+
 }                   t_env;
 
 /*
@@ -157,6 +163,16 @@ typedef struct      s_proto
 }                   t_proto;
 
 /*
+** rtt stats
+*/
+
+typedef struct      s_rtts
+{
+    double          min;
+    double          max;
+}                   t_rtts;
+
+/*
 ** t_env, t_proto and some values that will be needed/updated globally
 */
 
@@ -164,11 +180,13 @@ typedef struct      s_global
 {
     int             sockfd;
     int             nsent;
+    int             nrec;
     int             datalen;
     pid_t           pid;
     char            sendbuf[BUFSIZE];
     t_env           *env;
     t_proto         *pr;
+    t_rtts          rtts;
 }                   t_global;
 
 /*
@@ -229,6 +247,7 @@ void                *ft_calloc(size_t n, size_t size);
 */
 
 void                sig_alrm(int signo);
+void                sig_int(int signo);
 
 /*
 ** Wrappers

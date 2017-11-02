@@ -6,7 +6,16 @@
 
 void    dump_usage(void)
 {
-    printf("Usage: ./ping <host>\
-     \n\t-h sweepincrsize Specify the number of bytes to increment the size of ICMP payload after each sweep when sending sweeping pings. The default value is 1.\n");
-    exit(EXIT_SUCCESS);
+
+	/*
+	** Dump the program usage
+	*/
+
+    printf("usage: ping [ [ -v ] [ -h ] ] <hostname>\n");
+
+    /*
+    ** Exit
+    */
+
+	exit(EXIT_SUCCESS);
 }

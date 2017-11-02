@@ -55,6 +55,10 @@ void    proc_v4 (char *ptr, ssize_t len, struct msghdr *msg, struct timeval *tvr
     if ((icmplen = len - hlenl) < 8)
         return ;
 
+    /*
+    **
+    */
+
     if (icmp->icmp_type == ICMP_ECHOREPLY)
     {
 
@@ -91,19 +95,44 @@ void    proc_v4 (char *ptr, ssize_t len, struct msghdr *msg, struct timeval *tvr
         rtt = tvrecv->tv_sec * 1000.0 + tvrecv->tv_usec / 1000.0;
 
         /*
-        ** print rtt
+        ** Update nrecv (recieved packets)
         */
 
-        printf("%d bytes from %s: seq=%u, ttl=%d, rtt=%.3f ms\n",
-            icmplen, ft_sock_ntop_host(g_global->pr->sacrecv, g_global->pr->salen),
+        g_global->nrec++;
+
+        /*
+        ** compare the rtt to the min and max
+        */
+
+        if (rtt < g_global->rtts.min || g_global->rtts.min == 0.0000)
+            g_global->rtts.min = rtt;
+        else if (rtt > g_global->rtts.max)
+            g_global->rtts.max = rtt;
+
+        /*
+        ** print info
+        */
+
+        printf("%d bytes from %s (%s): icmp_seq=%u, ttl=%d, time=%.3f ms\n",
+            icmplen, g_global->env->host, ft_sock_ntop_host(g_global->pr->sacrecv, g_global->pr->salen),
             icmp->icmp_seq, ip->ip_ttl, rtt);
 
     }
     else if (g_global->env->verbose)
     {
 
-        printf(" %d bytes from %s: type = %d, code = %d\n",
-            icmplen, ft_sock_ntop_host(g_global->pr->sacrecv, g_global->pr->salen),
+        /*
+        ** Update nrecv (recieved packets)
+        */
+
+        g_global->nrec++;
+
+        /*
+        ** dump info
+        */
+
+        printf(" %d bytes from %s (%s): type = %d, code = %d\n",
+            icmplen, g_global->env->host, ft_sock_ntop_host(g_global->pr->sacrecv, g_global->pr->salen),
             icmp->icmp_type, icmp->icmp_code);
 
     }

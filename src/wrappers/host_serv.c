@@ -1,45 +1,64 @@
 #include <ping.h>
 
+/*
+** Using a hostname or IP address string ft_host_serv return
+** addrinfo structure containing the protocol family, either AF_INET or AF_INET6
+** That is if the hostname is valid
+*/
+
 struct addrinfo     *ft_host_serv(const char *host, const char *serv, int family, int socktype)
 {
-    int             n;
-    struct addrinfo hints;
-    struct addrinfo *res;
+	int             n;
 
-    /*
-    **
-    */
+	/*
+	** The hints argument specifies criteria for selecting the
+	** socket address structures returned in the list pointed to by res
+	*/
 
-    bzero (&hints, sizeof (struct addrinfo));
+	struct addrinfo hints;
 
-    /*
-    ** always return canonical name
-    */
+	/*
+	** Each network address that matches node and service, subject to any restrictions
+	** imposed by hints is returned with a pointer to the start of the list in res
+	*/
 
-    hints.ai_flags = AI_CANONNAME;
+	struct addrinfo *res;
 
-    /*
-    ** AF_UNSPEC, AF_INET, AF_INET6, etc.
-    */
+	/*
+	** Clear hints
+	*/
 
-    hints.ai_family = family;
+	bzero (&hints, sizeof (struct addrinfo));
 
-    /*
-    ** 0, SOCK_STREAM, SOCK_DGRAM, etc.
-    */
+	/*
+	** After a successful name lookup, return the canonical name of the node corresponding
+	** to the addrinfo structure value passed back (res)
+	*/
 
-    hints.ai_socktype = socktype;
+	hints.ai_flags = AI_CANONNAME;
 
-    /*
-    **
-    */
+	/*
+	** AF_UNSPEC, AF_INET, AF_INET6, etc.
+	*/
 
-    if ( (n = getaddrinfo(host, serv, &hints, &res)) != 0)
-        return (NULL);
+	hints.ai_family = family;
 
-    /*
-    ** return pointer to first on linked list
-    */
+	/*
+	** 0, SOCK_STREAM, SOCK_DGRAM, etc.
+	*/
 
-    return (res);
+	hints.ai_socktype = socktype;
+
+	/*
+	** get host name and service
+	*/
+
+	if ((n = getaddrinfo(host, serv, &hints, &res)) != 0)
+	    return (NULL);
+
+	/*
+	** return pointer to first on linked list
+	*/
+
+	return (res);
 }
