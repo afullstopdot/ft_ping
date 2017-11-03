@@ -80,6 +80,12 @@ help : display usage
 Unix Network Programming Vol 1, 3rd version
 ```
 
+## Notes
+
+```
+ft_ping was built for IPv6 support, I will finish the IPv6 portion later (never LOL)
+```
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
