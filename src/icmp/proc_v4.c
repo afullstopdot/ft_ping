@@ -56,7 +56,7 @@ void    proc_v4 (char *ptr, ssize_t len, struct msghdr *msg, struct timeval *tvr
         return ;
 
     /*
-    **
+    ** If the message is an ICMP echo reply
     */
 
     if (icmp->icmp_type == ICMP_ECHOREPLY)

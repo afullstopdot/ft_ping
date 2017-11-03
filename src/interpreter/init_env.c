@@ -35,23 +35,14 @@ static  int         get_sweepincrsize(char **argv)
             if (ft_strequ(argv[count], A_SWEEPINCRSIZE))
             {
 
-                if (argv[count + 1])
-                {
-
-                    return (ft_atoi(argv[count + 1]));
-
-                }
+                return (TRUE);
 
             }
             count++;
     
         }
 
-        /*
-        ** Default value is 1
-        */
-
-        return (1);    
+        return (FALSE);    
 
 }
 
@@ -99,7 +90,15 @@ int                 init_env(int argc, char **argv, t_env *env)
     */
 
     env->verbose = verbose;
+
+    /*
+    ** linux -h is for help smh
+    */
+
     env->sweepincrsize = sweepincrsize;
+
+    if (sweepincrsize == TRUE)
+        dump_usage();
     env->host = host;
 
     /*

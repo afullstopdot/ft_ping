@@ -20,12 +20,6 @@ int                 main(int argc, char **argv)
     t_proto         proto_v4;
 
     /*
-    ** IPv6 {}
-    */
-
-    // t_proto         proto_v6;
-
-    /*
     **
     */
 
@@ -99,7 +93,7 @@ int                 main(int argc, char **argv)
 		g_global->pid = getpid() & 0xffff;
 
         /*
-        ** Add singal
+        ** Add singals
         */
 
         signal(SIGALRM, sig_alrm);
@@ -132,33 +126,47 @@ int                 main(int argc, char **argv)
 
         if (host_addrinfo->ai_family == AF_INET)
         {
-        
+
+            /*
+            ** Global will pr will be set to proto_v4
+            */
+
             g_global->pr = &proto_v4;
         
+        }
+        else if (host_addrinfo->ai_family == AF_INET6)
+        {
+
+            /*
+            ** I was gonna add IPv6 support but im tired lol
+            */
+
+            ft_fatal_error("ipv6 not supported");
+
         }
         else
             ft_fatal_error("unknown address family");
   
         /*
-        **
+        ** Set host {} addr
         */
     
         g_global->pr->sasend = host_addrinfo->ai_addr;
 
         /*
-        **
+        ** Set our {} addr
         */
 
         g_global->pr->sacrecv = ft_calloc (1, host_addrinfo->ai_addrlen);
 
         /*
-        **
+        ** {} addr len
         */
 
         g_global->pr->salen = host_addrinfo->ai_addrlen;
 
         /*
-        **
+        ** Where processing takes place
         */
 
         readloop();
