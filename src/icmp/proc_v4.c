@@ -108,7 +108,7 @@ void    proc_v4 (char *ptr, ssize_t len, struct msghdr *msg, struct timeval *tvr
             g_global->rtts.min = rtt;
         else if (rtt > g_global->rtts.max)
             g_global->rtts.max = rtt;
-
+    
         /*
         ** print info
         */

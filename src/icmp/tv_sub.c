@@ -1,7 +1,7 @@
 #include <ping.h>
 
 /*
-** tv-suvtractfunction, subtracts two timeval structures
+** tv-suvtract function, subtracts two timeval structures
 ** storing the result in the first structure
 */
 

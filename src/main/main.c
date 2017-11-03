@@ -98,8 +98,6 @@ int                 main(int argc, char **argv)
 
 		g_global->pid = getpid() & 0xffff;
 
-
-
         /*
         ** Add singal
         */

@@ -82,8 +82,7 @@ void                sig_int(int signo)
 
     printf("\n--- %s ping statistics ---\n%d packets transmitted, %d recieved, %.0f%% packet loss, time %.fms\n",
         g_global->env->host, g_global->nsent, g_global->nrec, loss, finish);
-
-    printf("\nrtt min/avg/max/mdev = %.3f/0/%.3f/0 ms\n", g_global->rtts.min, g_global->rtts.max);
+    printf("rtt min/max = %.3f/%.3f\n", g_global->rtts.min, g_global->rtts.max);
 
     /*
     ** Exit program
