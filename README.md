@@ -63,7 +63,7 @@ make re
 Where “hostname” is the host you want to ping
 
 ```
-verbose : verbose outpit
+verbose : verbose output
 ```
 ```
 help : display usage
